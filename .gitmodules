@@ -1,0 +1,6 @@
+[submodule "external/wave-matlab"]
+	path = external/wave-matlab
+	url = https://github.com/mullerlab/wave-matlab.git
+[submodule "external/generalized-phase"]
+	path = external/generalized-phase
+	url = https://github.com/mullerlab/generalized-phase.git
