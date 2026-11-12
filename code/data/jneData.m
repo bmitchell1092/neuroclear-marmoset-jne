@@ -42,6 +42,8 @@ for k = 1:numel(rep)
         'f',S.f, 'Pxx',S.Pxx); %#ok<AGROW>
 end
 
+for i = 1:numel(flash), flash(i).R = jneDisplayR(flash(i).R); end   % figure orientation (jneDisplayMap)
+for i = 1:numel(other), other(i).R = jneDisplayR(other(i).R); end
 D = struct('flash',flash, 'other',other, 'Q',Q, 'darkPSD',darkPSD, 'implant',implant, ...
     'sessions',rep, 'channelMap',flash(1).R.channelMap, 'builtFrom',string(opt.ImplantDate));
 end

@@ -21,7 +21,7 @@ function fig = fig8_travelingWaves(varargin)
 % ⚠️ The in vivo band (0.1-0.8 m/s) must be checked against the cited papers.
 %
 % Name/value: 'Frames' -20:10:30 (spont, ms around the detection)
-%             'FlashEvent' {'260724_Biru_fullFieldFlash_01', 100}  'FlashFrames' -5:5:20 (ms around
+%             'FlashEvent' {'260724_Biru_fullFieldFlash_01', 100}  'FlashFrames' 5:5:30 (ms around
 %             the flash detection: late-era evoked waves cross the array in ~8 ms, so 5 ms steps)
 %             'EraFrom' '260622' (flash sessions used in b and c)  'ZLim' 3  'CycleMs' 70
 %             'Band' [0.1 0.8]  'XLim' [-200 350]
@@ -32,7 +32,7 @@ q.addParameter('Frames', -20:10:30);
 % wave-band phase). 260724 trial 100: best visible crest sweep of the late-era candidates
 % (rho 0.75, crossing-time plane fit R2 0.80) -- Blake picked it over the day-10 trial.
 q.addParameter('FlashEvent', {'260724_Biru_fullFieldFlash_01', 100});   % {session, trial} for jneFlashEpochData
-q.addParameter('FlashFrames', -5:5:20);
+q.addParameter('FlashFrames', 5:5:30);           % 128-153 ms (detection at 123 ms)
 q.addParameter('EraFrom', '260622');
 q.addParameter('ZLim', 3);
 q.addParameter('CycleMs', 70);
@@ -45,6 +45,7 @@ q.parse(varargin{:}); o = q.Results;
 st = jneStyle();
 Ps = jneSpontEpochData(); F = jneFlashWaveData(); S = jneSpeedData();
 Pf = jneFlashEpochData('Date',o.FlashEvent{1}(1:6), 'Epoch',o.FlashEvent{2});
+Ps = jneFlipEpoch(Ps); Pf = jneFlipEpoch(Pf);       % figure orientation (jneDisplayMap), display only
 % the exemplar event in each: the strongest detection (spont: +13 ms, rho 0.84 -- the
 % demo window's other detections are weaker; flash: +123 ms, rho 0.75, at the event-rate peak)
 [~, i1] = max(Ps.E.rho); [~, i2] = max(Pf.E.rho);

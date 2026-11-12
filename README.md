@@ -43,6 +43,11 @@ All signals are 1 kHz LFP in µV.
 - `fig8/lightRest_exemplar.mat` is the spontaneous window shown in Figure 8a, with 500 ms
   extra on each side.
 
+A note on orientation: the figures draw the array the way the channel map supplied with
+it does (row 1 = channels 57, 63, 1, 7). The grid in the data files is that map upside
+down (row 1 = 53, 33, 31, 11), which is the orientation our lab pipeline uses. The figure
+code flips it for display (`jneDisplayMap`), and nothing else depends on it.
+
 Contacts that failed QC are NaN, as are the 16 corners of the grid, which have no contact.
 Every file has the channel map, the electrode pitch (0.7 mm) and a note on how it was made.
 `expected.mat` holds the numbers from the published figures, which `verify` checks against.
