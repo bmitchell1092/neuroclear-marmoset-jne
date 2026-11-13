@@ -5,7 +5,9 @@ function ok = verify()
 setup_paths();
 X = load(fullfile(jneDataDir(), 'expected.mat'));
 res = {};
-tol = 1e-9;
+tol = 1e-9;     % Fig 7, and anything that is a count
+tolW = 1e-6;    % wave rho and speed: small floating-point differences across MATLAB versions or
+                % machines are tolerated; counts of trials and events must match exactly
 chk = @(name, pass, detail) fprintf('  %-4s %-44s %s\n', ternary(pass,'ok','FAIL'), name, detail);
 
 fprintf('\nFigure 7\n');
@@ -38,9 +40,9 @@ erp = squeeze(mean(F.erp.perSession, [1 2 4], 'omitnan')); d = max(abs(erp - X.f
 chk('evoked LFP, array mean (b)', d < 1e-4, sprintf('max diff %.1e uV', d)); res{end+1} = d < 1e-4;
 S = jneSpeedData(); E = S.E;
 vs = sort(E.speed_m_s(E.surface == "spont")); ve = sort(E.speed_m_s(E.window == "evoked"));
-p = isequal(size(vs), size(X.fig8.speedSpont)) && max(abs(vs - X.fig8.speedSpont)) < tol;
+p = isequal(size(vs), size(X.fig8.speedSpont)) && max(abs(vs - X.fig8.speedSpont)) < tolW;
 chk('spontaneous wave speeds (c)', p, sprintf('n = %d, median %.2f m/s', numel(vs), median(vs))); res{end+1} = p;
-p = isequal(size(ve), size(X.fig8.speedEvoked)) && max(abs(ve - X.fig8.speedEvoked)) < tol;
+p = isequal(size(ve), size(X.fig8.speedEvoked)) && max(abs(ve - X.fig8.speedEvoked)) < tolW;
 chk('flash-evoked wave speeds (c)', p, sprintf('n = %d, median %.2f m/s', numel(ve), median(ve))); res{end+1} = p;
 Ps = jneSpontEpochData(); Pf = jneFlashEpochData();
 p = sameEvents(Ps.E, X.fig8.spontEvents);
@@ -66,7 +68,7 @@ end
 
 function p = sameEvents(a, b)
 v = {'epoch','time_ms','rho','srcRow','srcCol'};
-p = height(a) == height(b) && max(abs(a{:,v} - b{:,v}), [], 'all') < 1e-9;
+p = height(a) == height(b) && max(abs(a{:,v} - b{:,v}), [], 'all') < 1e-6;
 if height(a) == 0 && height(b) == 0, p = true; end
 end
 

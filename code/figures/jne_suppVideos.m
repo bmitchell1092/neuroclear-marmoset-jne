@@ -14,7 +14,7 @@ q = inputParser;
 q.addParameter('SaveDir', jneOutDir());
 q.addParameter('FPS', 12);
 q.parse(varargin{:}); o = q.Results;
-S = jneFlipEpoch(jneSpontEpochData()); F = jneFlipEpoch(jneFlashEpochData());   % figure orientation
+S = jneSpontEpochData(); F = jneFlashEpochData();
 files = {fullfile(o.SaveDir, 'SupplementaryVideo1_spontaneousWave.mp4'), ...
          fullfile(o.SaveDir, 'SupplementaryVideo2_flashEvokedWave.mp4')};
 % waveEpochMovie titles each frame '<EpochLabel> <epoch index>'; the cube is passed as epoch

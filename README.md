@@ -43,10 +43,10 @@ All signals are 1 kHz LFP in µV.
 - `fig8/lightRest_exemplar.mat` is the spontaneous window shown in Figure 8a, with 500 ms
   extra on each side.
 
-A note on orientation: the figures draw the array the way the channel map supplied with
-it does (row 1 = channels 57, 63, 1, 7). The grid in the data files is that map upside
-down (row 1 = 53, 33, 31, 11), which is the orientation our lab pipeline uses. The figure
-code flips it for display (`jneDisplayMap`), and nothing else depends on it.
+- `channel_map.mat` is the channel map supplied with the array: which Intan channel sits at
+  each position of the 8 × 10 grid (0-based; row 1, at the top of every figure, is channels
+  57, 63, 1, 7). All the cubes use this layout. `channel_map_slides.pdf` shows where it
+  comes from: the array and PCB design, the pad-to-channel table, and the resulting map.
 
 Contacts that failed QC are NaN, as are the 16 corners of the grid, which have no contact.
 Every file has the channel map, the electrode pitch (0.7 mm) and a note on how it was made.

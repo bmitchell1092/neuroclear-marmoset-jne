@@ -41,11 +41,11 @@ q.addParameter('XLim', [-200 350]);
 q.addParameter('SaveDir', jneOutDir());
 q.addParameter('SaveTag', 'fig8_travelingWaves');
 q.addParameter('Save', true);
+q.addParameter('SavePanels', true);   % also <SaveTag>_a, _b, _c (each panel on its own)
 q.parse(varargin{:}); o = q.Results;
 st = jneStyle();
 Ps = jneSpontEpochData(); F = jneFlashWaveData(); S = jneSpeedData();
 Pf = jneFlashEpochData('Date',o.FlashEvent{1}(1:6), 'Epoch',o.FlashEvent{2});
-Ps = jneFlipEpoch(Ps); Pf = jneFlipEpoch(Pf);       % figure orientation (jneDisplayMap), display only
 % the exemplar event in each: the strongest detection (spont: +13 ms, rho 0.84 -- the
 % demo window's other detections are weaker; flash: +123 ms, rho 0.75, at the event-rate peak)
 [~, i1] = max(Ps.E.rho); [~, i2] = max(Pf.E.rho);
@@ -154,6 +154,7 @@ for i = 1:3
 end
 
 if o.Save, jneSave(fig, o.SaveDir, o.SaveTag, st); end
+if o.Save && o.SavePanels, jneSaveFig8Panels(fig, o.SaveDir, o.SaveTag, st, H, Hd); end
 end
 
 % =====================================================================
